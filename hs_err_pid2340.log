@@ -1,0 +1,125 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fb02b797401, pid=2340, tid=2342
+#
+# JRE version: OpenJDK Runtime Environment (11.0.10+9) (build 11.0.10+9-Ubuntu-0ubuntu1.18.04)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.10+9-Ubuntu-0ubuntu1.18.04, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x2401]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport %p %s %c %d %P %E" (or dumping to /home/maksymilian/algorithmics_source/algorithmics/core.2340)
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:39861 -javaagent:/home/maksymilian/eclipse/jee-2019-122/eclipse/configuration/org.eclipse.osgi/405/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=UTF-8 com.maks.algorithmics.Main
+
+Host: Intel(R) Core(TM) i5-7300U CPU @ 2.60GHz, 2 cores, 10G, Ubuntu 18.04.5 LTS
+Time: Wed May  5 14:51:47 2021 CEST elapsed time: 23.137358 seconds (0d 0h 0m 23s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fb024019000):  JavaThread "main" [_thread_in_vm, id=2342, stack(0x00007fb02ebb4000,0x00007fb02ecb5000)]
+
+Stack: [0x00007fb02ebb4000,0x00007fb02ecb5000],  sp=0x00007fb02ecb20a0,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libjimage.so+0x2401]
+C  [libjimage.so+0x30ea]
+C  [libjimage.so+0x35c6]  JIMAGE_FindResource+0xd6
+V  [libjvm.so+0x5c0fde]
+V  [libjvm.so+0x5c3d40]
+V  [libjvm.so+0xe46cc5]
+V  [libjvm.so+0xe4457a]
+V  [libjvm.so+0xe47252]
+V  [libjvm.so+0x6779dd]
+V  [libjvm.so+0x870e5c]
+j  java.util.Scanner.throwFor()V+26 java.base@11.0.10
+j  java.util.Scanner.next(Ljava/util/regex/Pattern;)Ljava/lang/String;+80 java.base@11.0.10
+j  java.util.Scanner.nextInt(I)I+56 java.base@11.0.10
+j  java.util.Scanner.nextInt()I+5 java.base@11.0.10
+j  com.maks.algorithmics.linear.data.structure.ArrayMedium.run()V+14
+j  com.maks.algorithmics.Main.main([Ljava/lang/String;)V+0
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x880719]
+V  [libjvm.so+0x8ff1fd]
+V  [libjvm.so+0x9014ae]
+C  [libjli.so+0x5953]
+C  [libjli.so+0x949d]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  java.util.Scanner.throwFor()V+26 java.base@11.0.10
+j  java.util.Scanner.next(Ljava/util/regex/Pattern;)Ljava/lang/String;+80 java.base@11.0.10
+j  java.util.Scanner.nextInt(I)I+56 java.base@11.0.10
+j  java.util.Scanner.nextInt()I+5 java.base@11.0.10
+j  com.maks.algorithmics.linear.data.structure.ArrayMedium.run()V+14
+j  com.maks.algorithmics.Main.main([Ljava/lang/String;)V+0
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00007fb01b899ad4
+
+Register to memory mapping:
+
+RAX=0x00000000000022ae is an unknown value
+RBX=0x00007fb02ecb2151 is pointing into the stack for thread: 0x00007fb024019000
+RCX=0x00007fb01b89101c is an unknown value
+RDX=0x00000000000022ae is an unknown value
+RSP=0x00007fb02ecb20a0 is pointing into the stack for thread: 0x00007fb024019000
+RBP=0x00007fb02ecb20c0 is pointing into the stack for thread: 0x00007fb024019000
+RSI=0x00007fb02ecb2150 is pointing into the stack for thread: 0x00007fb024019000
+RDI=0x00007fb02b99a030: <offset 0x0000000000205030> in /usr/lib/jvm/java-11-openjdk-amd64/lib/libjimage.so at 0x00007fb02b795000
+R8 =0x0 is NULL
+R9 =0x00000000dd95d9d5 is an unknown value
+R10=0x00007fb02ecb2179 is pointing into the stack for thread: 0x00007fb024019000
+R11=0x00007fb02e654720: <offset 0x00000000001af720> in /lib/x86_64-linux-gnu/libc.so.6 at 0x00007fb02e4a5000
+R12=0x00007fb02ecb2150 is pointing into the stack for thread: 0x00007fb024019000
+R13=0x0000000000008424 is an unknown value
+R14=0x00007fb02ecb31e8 is pointing into the stack for thread: 0x00007fb024019000
+R15=0x00007fb024019ca0 points into unknown readable memory: 0x6974752f6176616a | 6a 61 76 61 2f 75 74 69
+
+
+Registers:
+RAX=0x00000000000022ae, RBX=0x00007fb02ecb2151, RCX=0x00007fb01b89101c, RDX=0x00000000000022ae
+RSP=0x00007fb02ecb20a0, RBP=0x00007fb02ecb20c0, RSI=0x00007fb02ecb2150, RDI=0x00007fb02b99a030
+R8 =0x0000000000000000, R9 =0x00000000dd95d9d5, R10=0x00007fb02ecb2179, R11=0x00007fb02e654720
+R12=0x00007fb02ecb2150, R13=0x0000000000008424, R14=0x00007fb02ecb31e8, R15=0x00007fb024019ca0
+RIP=0x00007fb02b797401, EFLAGS=0x0000000000010246, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fb02ecb20a0)
+0x00007fb02ecb20a0:   000000002877a2c8 00007fb024009f70
+0x00007fb02ecb20b0:   0000000000000000 00007fb02ecb2150
+0x00007fb02ecb20c0:   00007fb02ecb2130 00007fb02b7980ea
+0x00007fb02ecb20d0:   00007fb02ecb21a0 00007fb02877ac58 
+
+Instructions: (pc=0x00007fb02b797401)
+0x00007fb02b797301:   c5 4c 01 e3 48 89 ce e8 d3 f3 ff ff e9 69 fd ff
+0x00007fb02b797311:   ff 89 d1 0f b7 74 08 fe 66 41 89 74 0e fe e9 7a
+0x00007fb02b797321:   fe ff ff 0f 1f 40 00 8b 08 49 8d 1c 16 41 89 0e
+0x00007fb02b797331:   89 d1 8b 74 08 fc 41 89 74 0e fc 48 8d 34 10 48
+0x00007fb02b797341:   89 75 b8 e9 0b fe ff ff 0f 1f 80 00 00 00 00 0f
+0x00007fb02b797351:   b6 17 55 89 f0 48 89 e5 84 d2 74 22 48 8d 4f 01
+0x00007fb02b797361:   0f 1f 80 00 00 00 00 48 83 c1 01 0f b6 f2 0f b6
+0x00007fb02b797371:   51 ff 69 c0 93 01 00 01 31 f0 84 d2 75 e9 25 ff
+0x00007fb02b797381:   ff ff 7f 5d c3 66 2e 0f 1f 84 00 00 00 00 00 48
+0x00007fb02b797391:   85 d2 0f 84 dd 00 00 00 85 c9 0f 84 d5 00 00 00
+0x00007fb02b7973a1:   55 48 89 e5 41 55 41 54 53 48 8d 5e 01 48 83 ec
+0x00007fb02b7973b1:   08 44 0f b6 06 45 84 c0 0f 84 a9 00 00 00 49 89
+0x00007fb02b7973c1:   da b8 93 01 00 01 66 0f 1f 84 00 00 00 00 00 49
+0x00007fb02b7973d1:   83 c2 01 44 69 c8 93 01 00 01 41 0f b6 c0 45 0f
+0x00007fb02b7973e1:   b6 42 ff 44 31 c8 45 84 c0 75 e4 25 ff ff ff 7f
+0x00007fb02b7973f1:   41 89 cd 48 89 d1 31 d2 41 f7 f5 49 89 f4 89 d0
+0x00007fb02b797401:   8b 34 81 48 8b 07 ff 50 20 83 f8 00 7e 41 41 0f
+0x00007fb02b797411:   b6 14 24 84 d2 74 1c 0f 1f 84 00 00 00 00 00 69
+0x00007fb02b797421:   c0 93 01 00 01 48 83 c3 01 31 d0 0f b6 53 ff 84
+0x00007fb02b797431:   d2 75 ec 25 ff ff ff 7f 31 d2 41 f7 f5 48 83 c4
+0x00007fb02b797441:   08 89 d0 5b 41 5c 41 5d 5d c3 0f 1f 44 00 00 74
+0x00007fb02b797451:   1d f7 d0 48 83 c4 08 89 c2 5b 89 d0 41 5c 41 5d
+0x00007fb02b797461:   5d c3 0f 1f 44 00 00 b8 93 01 00 01 eb 82 ba ff
+0x00007fb02b797471:   ff ff ff eb c8 83 ca ff 89 d0 c3 0f 1f 40 00 0f
+0x00007fb02b797481:   b6 17 55 48 89 f8 48 89 e5 84 d2 75 15 eb 1a 38
+0x00007fb02b797491:   ca 75 1c 48 83 c0 01 0f b6 10 48 83 c6 01 84 d2
+0x00007fb02b7974a1:   74 07 0f b6 0e 84 c9 75 e6 5d c3 0f
