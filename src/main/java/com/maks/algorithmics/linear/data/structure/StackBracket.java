@@ -1,20 +1,21 @@
 package com.maks.algorithmics.linear.data.structure;
 
-import com.maks.algorithmics.InputUtils;
+import com.maks.algorithmics.Utils.Input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.List;
 
 public class StackBracket {
 
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void run() throws IOException {
         List<Integer> list;
-        while ((list = InputUtils.readListOfIntegersFromLineOrNull(br)) != null) {
+        while ((list = Input.readListOfIntegersFromLineOrNull(br)) != null) {
             if (isCorrect(list)) {
                 System.out.println(":-) Matrioshka!");
             } else {
@@ -31,7 +32,7 @@ public class StackBracket {
                 brackets.push((-1) * i);
                 availablePlaces.push((-1) * i);
             } else {
-                if (brackets.peek() == i) {
+                if (Objects.equals(brackets.peek(), i)) {
                     brackets.pop();
                     availablePlaces.pop();
                     if(!availablePlaces.empty()) {

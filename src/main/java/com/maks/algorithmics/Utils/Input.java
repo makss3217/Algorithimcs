@@ -1,4 +1,4 @@
-package com.maks.algorithmics;
+package com.maks.algorithmics.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
-public class InputUtils {
+public class Input {
 
     public static List<Integer> readListOfIntegersFromLineOrNull(BufferedReader br) throws IOException {
         String line = br.readLine();
         if(line != null) {
-            return Arrays.asList(line.split(" ")).stream()
+            return Arrays.stream(line.split(" "))
                     .map(Integer::parseInt)
                     .collect(toList());
         } else {

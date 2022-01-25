@@ -1,6 +1,6 @@
 package com.maks.algorithmics.non.linear.data.structure;
 
-import com.maks.algorithmics.InputUtils;
+import com.maks.algorithmics.Utils.Input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class HashTableSet {
 
 
   public static void run() throws IOException {
-    Integer N = InputUtils.readIntFromLineOrNull(br);
+    Integer N = Input.readIntFromLineOrNull(br);
     int result;
     for(int i = 0; i < N; i++) {
       result = testCase();
@@ -26,7 +26,7 @@ public class HashTableSet {
 
   private static int testCase() throws IOException {
     HashSet<String> resultSet = new HashSet<>();
-    List<Integer> inputSize = InputUtils.readListOfIntegersFromLineOrNull(br);
+    List<Integer> inputSize = Input.readListOfIntegersFromLineOrNull(br);
     int N = inputSize.get(0);
     int M = inputSize.get(1);
     String[] firstList = new String[1501];

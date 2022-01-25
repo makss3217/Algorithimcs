@@ -1,6 +1,6 @@
 package com.maks.algorithmics.non.linear.data.structure;
 
-import com.maks.algorithmics.InputUtils;
+import com.maks.algorithmics.Utils.Input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class DirectAddressingTable {
   private static final StringBuilder strBuilder = new StringBuilder();
 
   public static void run() throws IOException {
-    Integer N = InputUtils.readIntFromLineOrNull(br);
+    Integer N = Input.readIntFromLineOrNull(br);
     for(int i = 0; i < N; i++) {
       testCase();
     }
