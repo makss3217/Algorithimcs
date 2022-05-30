@@ -28,5 +28,14 @@ public class Input {
         }
     }
 
+    public static List<String> readListOfStringFromLineOrNull(BufferedReader br) throws IOException {
+        String line = br.readLine();
+        if(line != null) {
+            return Arrays.asList(line.split(" "));
+        } else {
+            return null;
+        }
+    }
+
 }
 

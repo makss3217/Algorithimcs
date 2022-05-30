@@ -4,112 +4,126 @@ import java.util.NoSuchElementException;
 
 public class BST {
 
-    protected BSTVertex root;
-    private int h(BSTVertex T) {
+  protected BSTVertex root;
+
+  private int h(BSTVertex T) {
     return T == null ? -1 : T.height;
   }
 
-    protected BSTVertex search(BSTVertex T, int v) {
-      if (T == null)  return T;                                  // not found
-      else if (T.key == v) return T;                                      // found
-      else if (T.key < v)  return search(T.right, v);       // search to the right
-      else                 return search(T.left, v);         // search to the left
+  protected BSTVertex search(BSTVertex T, int v) {
+    if (T == null)
+      return T;                                  // not found
+    else if (T.key == v)
+      return T;                                      // found
+    else if (T.key < v)
+      return search(T.right, v);       // search to the right
+    else
+      return search(T.left, v);         // search to the left
+  }
+
+  protected BSTVertex insert(BSTVertex T, int v) {
+    if (T == null) {
+      return new BSTVertex(v);          // insertion point is found
+    }
+    T.size++;
+    if (T.key < v) {                                      // search to the right
+      T.right = insert(T.right, v);
+      T.right.parent = T;
+    } else {                                                 // search to the left
+      T.left = insert(T.left, v);
+      T.left.parent = T;
     }
 
-    protected BSTVertex insert(BSTVertex T, int v) {
-      if (T == null) return new BSTVertex(v);          // insertion point is found
+    T = balanceTree(T);
+    return T;                                          // return the updated BST
+  }
 
-      if (T.key < v) {                                      // search to the right
-        T.right = insert(T.right, v);
-        T.right.parent = T;
-      }
-      else {                                                 // search to the left
-        T.left = insert(T.left, v);
-        T.left.parent = T;
-      }
+  protected void inorder(BSTVertex T) {
+    if (T == null)
+      return;
+    inorder(T.left);                               // recursively go to the left
+    System.out.printf(" %d", T.key);                      // visit this BST node
+    inorder(T.right);                             // recursively go to the right
+  }
 
+  protected int findMin(BSTVertex T) {
+    if (T == null)
+      throw new NoSuchElementException("BST is empty, no minimum");
+    else if (T.left == null)
+      return T.key;                    // this is the min
+    else
+      return findMin(T.left);           // go to the left
+  }
+
+  protected int findMax(BSTVertex T) {
+    if (T == null)
+      throw new NoSuchElementException("BST is empty, no maximum");
+    else if (T.right == null)
+      return T.key;                   // this is the max
+    else
+      return findMax(T.right);        // go to the right
+  }
+
+  protected int successor(BSTVertex T) {
+    if (T.right != null)                       // this subtree has right subtree
+      return findMin(T.right);  // the successor is the minimum of right subtree
+    else {
+      BSTVertex par = T.parent;
+      BSTVertex cur = T;
+      // if par(ent) is not root and cur(rent) is its right children
+      while ((par != null) && (cur == par.right)) {
+        cur = par;                                         // continue moving up
+        par = cur.parent;
+      }
+      return par == null ? -1 : par.key;           // this is the successor of T
+    }
+  }
+
+  protected int predecessor(BSTVertex T) {
+    if (T.left != null)                         // this subtree has left subtree
+      return findMax(T.left);  // the predecessor is the maximum of left subtree
+    else {
+      BSTVertex par = T.parent;
+      BSTVertex cur = T;
+      // if par(ent) is not root and cur(rent) is its left children
+      while ((par != null) && (cur == par.left)) {
+        cur = par;                                         // continue moving up
+        par = cur.parent;
+      }
+      return par == null ? -1 : par.key;           // this is the successor of T
+    }
+  }
+
+  protected BSTVertex delete(BSTVertex T, int v) {
+    T.size--;                                   // decrease size of subtree
+    if (T.key == v) {                          // this is the node to be deleted
+      if (T.left == null && T.right == null)                   // this is a leaf
+        T = null;                                      // simply erase this node
+      else if (T.left == null) {   // only one child at right
+        T.right.parent = T.parent;
+        T = T.right;                                                 // bypass T
+      } else if (T.right == null) {    // only one child at left
+        T.left.parent = T.parent;
+        T = T.left;                                                  // bypass T
+      } else {                                 // has two children, find successor
+        int successorV = successor(v);
+        T.key = successorV;         // replace this key with the successor's key
+        T.right = delete(T.right, successorV);      // delete the old successorV
+      }
+    } else {
+      if (T.key < v) {                               // search to the right
+        T.right = delete(T.right, v);
+      } else {                                       // search to the left
+        T.left = delete(T.left, v);
+      }
+    }
+
+    if (T != null) {               // similar as insertion code except this line
       T = balanceTree(T);
-      return T;                                          // return the updated BST
     }
 
-    protected void inorder(BSTVertex T) {
-      if (T == null) return;
-      inorder(T.left);                               // recursively go to the left
-      System.out.printf(" %d", T.key);                      // visit this BST node
-      inorder(T.right);                             // recursively go to the right
-    }
-
-    protected int findMin(BSTVertex T) {
-      if (T == null)      throw new NoSuchElementException("BST is empty, no minimum");
-      else if (T.left == null) return T.key;                    // this is the min
-      else                     return findMin(T.left);           // go to the left
-    }
-
-    protected int findMax(BSTVertex T) {
-      if (T == null)       throw new NoSuchElementException("BST is empty, no maximum");
-      else if (T.right == null) return T.key;                   // this is the max
-      else                      return findMax(T.right);        // go to the right
-    }
-
-    protected int successor(BSTVertex T) {
-      if (T.right != null)                       // this subtree has right subtree
-        return findMin(T.right);  // the successor is the minimum of right subtree
-      else {
-        BSTVertex par = T.parent;
-        BSTVertex cur = T;
-        // if par(ent) is not root and cur(rent) is its right children
-        while ((par != null) && (cur == par.right)) {
-          cur = par;                                         // continue moving up
-          par = cur.parent;
-        }
-        return par == null ? -1 : par.key;           // this is the successor of T
-      }
-    }
-
-    protected int predecessor(BSTVertex T) {
-      if (T.left != null)                         // this subtree has left subtree
-        return findMax(T.left);  // the predecessor is the maximum of left subtree
-      else {
-        BSTVertex par = T.parent;
-        BSTVertex cur = T;
-        // if par(ent) is not root and cur(rent) is its left children
-        while ((par != null) && (cur == par.left)) {
-          cur = par;                                         // continue moving up
-          par = cur.parent;
-        }
-        return par == null ? -1 : par.key;           // this is the successor of T
-      }
-    }
-
-    protected BSTVertex delete(BSTVertex T, int v) {
-        if (T == null)
-          return null;              // cannot find the item to be deleted
-
-        if (T.key == v) {                          // this is the node to be deleted
-          if (T.left == null && T.right == null)                   // this is a leaf
-            T = null;                                      // simply erase this node
-          else if (T.left == null) {   // only one child at right
-            T.right.parent = T.parent;
-            T = T.right;                                                 // bypass T
-          } else if (T.right == null) {    // only one child at left
-            T.left.parent = T.parent;
-            T = T.left;                                                  // bypass T
-          } else {                                 // has two children, find successor
-            int successorV = successor(v);
-            T.key = successorV;         // replace this key with the successor's key
-            T.right = delete(T.right, successorV);      // delete the old successorV
-          }
-        } else if (T.key < v)                                   // search to the right
-          T.right = delete(T.right, v);
-        else                                                   // search to the left
-          T.left = delete(T.left, v);
-
-        if (T != null) {               // similar as insertion code except this line
-          T = balanceTree(T);
-        }
-
-        return T;                                          //                                 // return the updated BST
-    }
+    return T;                                                                       // return the updated BST
+  }
 
   private BSTVertex balanceTree(BSTVertex T) {
     int balance = h(T.left) - h(T.right);
@@ -149,6 +163,8 @@ public class BST {
     T.height = Math.max(h(T.left), h(T.right)) + 1;
     w.height = Math.max(h(w.left), h(w.right)) + 1;
 
+    T.size = T.getLeftChildSize() + T.getRightChildSize() + 1;
+    w.size = w.getLeftChildSize() + w.getRightChildSize() + 1;
     return w;
   }
 
@@ -166,46 +182,113 @@ public class BST {
     T.height = Math.max(h(T.left), h(T.right)) + 1;
     w.height = Math.max(h(w.left), h(w.right)) + 1;
 
+    T.size = T.getLeftChildSize() + T.getRightChildSize() + 1;
+    w.size = w.getLeftChildSize() + w.getRightChildSize() + 1;
     return w;
   }
 
-    public BST() {
-      root = null; }
+  public BST() {
+    root = null;
+  }
 
-    public int search(int v) {
-      BSTVertex res = search(root, v);
+  public int search(int v) {
+    BSTVertex res = search(root, v);
+    return res == null ? -1 : res.key;
+  }
+
+  public int searchOrTheFirstLower(int v) {
+      BSTVertex res  = searchOrTheFirstLower(root, v);
       return res == null ? -1 : res.key;
-    }
+  }
 
-    public void insert(int v) {
-      root = insert(root, v); }
+  private BSTVertex searchOrTheFirstLower(BSTVertex T, int v) {
+    if (T == null)
+      return null;                                  // not found
+    else if (T.key == v)
+      return T;                                      // found
+    else if (T.key < v)
+      if(T.right == null) {
 
-    public void inorder() {
-      inorder(root);
-      System.out.println();
-    }
+      } else {
+        return search(T.right, v);
+      }                                   // search to the right
+    else
+      return search(T.left, v);         // search to the left
+    return T;
+  }
 
-    public int findMin() { return findMin(root); }
+  public void insert(int v) {
+    root = insert(root, v);
+  }
 
-    public int findMax() { return findMax(root); }
+  public void inorder() {
+    inorder(root);
+    System.out.println();
+  }
 
-    public int successor(int v) {
-      BSTVertex vPos = search(root, v);
-      return vPos == null ? -1 : successor(vPos);
-    }
+  public int findMin() {
+    return findMin(root);
+  }
 
-    public int predecessor(int v) {
-      BSTVertex vPos = search(root, v);
-      return vPos == null ? -1 : predecessor(vPos);
-    }
+  public int findMax() {
+    return findMax(root);
+  }
 
-    public void delete(int v) {
+  public int successor(int v) {
+    BSTVertex vPos = search(root, v);
+    return vPos == null ? -1 : successor(vPos);
+  }
+
+  public int predecessor(int v) {
+    BSTVertex vPos = search(root, v);
+    return vPos == null ? -1 : predecessor(vPos);
+  }
+
+  public void delete(int v) {
+    if (search(v) != -1) {
       root = delete(root, v);
     }
-    protected int getHeight(BSTVertex T) {
-      if (T == null) return -1;
-      else return Math.max(getHeight(T.left), getHeight(T.right)) + 1;
-    }
-
-    public int getHeight() { return getHeight(root); }
   }
+
+  protected int getHeight(BSTVertex T) {
+    if (T == null)
+      return -1;
+    else
+      return Math.max(getHeight(T.left), getHeight(T.right)) + 1;
+  }
+
+  public int getHeight() {
+    return getHeight(root);
+  }
+
+  public void deleteKthSmallestNode(int k) {
+    BSTVertex toDelete = findKthSmallest(k);
+    if (toDelete != null) {
+      delete(root, toDelete.key);
+    }
+  }
+
+  public int getKthSmallestValue(int k) {
+    return findKthSmallest(k).key;
+  }
+
+  private BSTVertex findKthSmallest(int k) {
+    return findKthSmallest(root, k);
+  }
+
+  private BSTVertex findKthSmallest(BSTVertex root, int k) {
+    int leftSubTreeSize = (root.left == null) ? 0 : root.left.size;
+    if (leftSubTreeSize + 1 == k) {
+      return root;
+    } else if (leftSubTreeSize >= k) {
+      return findKthSmallest(root.left, k);
+    } else if (root.right != null) {
+      return findKthSmallest(root.right, k - leftSubTreeSize - 1);
+    }
+    return null;
+  }
+
+  public int size() {
+    return root.size;
+  }
+}
