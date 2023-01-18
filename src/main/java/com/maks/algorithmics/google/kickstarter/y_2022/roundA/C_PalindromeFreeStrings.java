@@ -1,13 +1,14 @@
 package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
 import com.maks.algorithmics.Utils.InputUtils;
+import com.maks.algorithmics.google.kickstarter.GoogleKickstarterTask;
 import lombok.Value;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
 
-public class C_PalindromeFreeStrings {
+public class C_PalindromeFreeStrings extends GoogleKickstarterTask<C_PalindromeFreeStrings.Input, C_PalindromeFreeStrings.Output> {
 
   private static final Set<String> PALINDROMS_5 = Set.of(
       "00000",
@@ -29,25 +30,20 @@ public class C_PalindromeFreeStrings {
       "101101",
       "100001");
 
-  public static String run(BufferedReader br) throws IOException {
-    List<String> testCasesResults = new ArrayList<>();
-    int t = InputUtils.readIntFromLineOrNull(br);
-    for (int i = 1; i <= t; i++) {
-      testCasesResults.add("Case #" + i + ": " + getFormattedResult(testCase(getInputFromReader(br))));
-    }
-    return String.join("\n", testCasesResults);
-  }
 
-  private static String getFormattedResult(Output output) {
+  @Override
+  protected String getFormattedResult(Output output) {
     return output.isPossible() ? "POSSIBLE" : "IMPOSSIBLE";
   }
 
-  static Input getInputFromReader(BufferedReader br) throws IOException {
+  @Override
+  protected Input getInputFromReader(BufferedReader br) throws IOException {
     br.readLine();
     return new Input(br.readLine());
   }
 
-  public static Output testCase(Input input) {
+  @Override
+  protected Output testCase(Input input) {
     Set<String> oldResults = new HashSet<>();
     oldResults.add("");
     Set<String> newResults= new HashSet<>();

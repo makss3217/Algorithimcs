@@ -1,40 +1,33 @@
 package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
 import com.maks.algorithmics.Utils.InputUtils;
+import com.maks.algorithmics.google.kickstarter.GoogleKickstarterTask;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class D_InterestingIntegers {
+@AllArgsConstructor
+public class D_InterestingIntegers extends GoogleKickstarterTask<D_InterestingIntegers.Input, D_InterestingIntegers.Output> {
 
-  private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  static final HashMap<InterestingIntegersKey, Long> interestingNumbersMap = new HashMap<>();
 
-  private static final HashMap<InterestingIntegersKey, Long> interestingNumbersMap = new HashMap<>();
-
-  public static String run() throws IOException {
-    List<String> testCasesResults = new ArrayList<>();
-    int t = InputUtils.readIntFromLineOrNull(br);
-    for (int i = 1; i <= t; i++) {
-      testCasesResults.add("Case #" + i + ": " + getFormattedResult(testCase(getInputFromReader(br))));
-    }
-    return String.join("\n", testCasesResults);
-  }
-
-  static Input getInputFromReader(BufferedReader br) throws IOException {
+  @Override
+  protected Input getInputFromReader(BufferedReader br) throws IOException {
     List<Long> numbers = InputUtils.readListOfLongsFromLineOrNull(br);
     return new Input(numbers.get(0), numbers.get(1));
   }
 
-  private static String getFormattedResult(Output output) {
+  @Override
+ protected String getFormattedResult(Output output) {
     return String.valueOf(output.getResult());
   }
 
-  static Output testCase(Input input) {
+  @Override
+  protected Output testCase(Input input) {
    return new Output(howManyInteresting(input.getB()) - howManyInteresting(input.getA() - 1));
   }
 
@@ -56,7 +49,7 @@ public class D_InterestingIntegers {
     }
    }
 
-  private static long howManyInteresting(long number) {
+  private long howManyInteresting(long number) {
     if (number == 0) {
       return 0;
     }
@@ -68,7 +61,7 @@ public class D_InterestingIntegers {
     return count;
   }
 
-  private static long CountInterestingIntegersWithNumberOfDigits(int L) {
+  private long CountInterestingIntegersWithNumberOfDigits(int L) {
     long count = 0;
     for(int i = 1; i <= 9; i++) {
       count += f1(L - 1, i, i);
@@ -76,7 +69,7 @@ public class D_InterestingIntegers {
     return count;
   }
 
-  private static long CountInterestingIntegersWithPrefixOfN(long N, long P, long S, int digitIndex, boolean isFirstDigit) {
+  private long CountInterestingIntegersWithPrefixOfN(long N, long P, long S, int digitIndex, boolean isFirstDigit) {
     if (digitIndex == countDigits(N)) {
       return (S > 0 &&  (P % S == 0)) ? 1: 0;
     }
@@ -98,11 +91,11 @@ public class D_InterestingIntegers {
     return count;
   }
 
-  private static long getIthDigit(long n, int digitIndex) {
+  private long getIthDigit(long n, int digitIndex) {
     return String.valueOf(n).charAt(digitIndex) - '0';
   }
 
-  private static int countDigits(long number) {
+  private int countDigits(long number) {
     return (int) (Math.log10(number) + 1);
   }
 

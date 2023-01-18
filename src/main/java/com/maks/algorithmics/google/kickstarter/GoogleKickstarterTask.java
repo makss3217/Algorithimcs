@@ -8,22 +8,26 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface GoogleKickstarterTask<SingleInput, SingleOutput> {
+public abstract class GoogleKickstarterTask<SingleInput, SingleOutput> {
 
-  BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  BufferedReader reader= new BufferedReader(new InputStreamReader(System.in));
 
-  default String run() throws IOException {
+  public String run() throws IOException {
+    return run(reader);
+  }
+
+  public String run(BufferedReader reader) throws IOException {
     List<String> testCasesResults = new ArrayList<>();
-    int t = InputUtils.readIntFromLineOrNull(br);
+    int t = InputUtils.readIntFromLineOrNull(reader);
     for (int i = 1; i <= t; i++) {
-      testCasesResults.add("Case #" + i + ": " + getFormattedResult(testCase(getInputFromReader(br))));
+      testCasesResults.add("Case #" + i + ": " + getFormattedResult(testCase(getInputFromReader(reader))));
     }
     return String.join("\n", testCasesResults);
   }
 
-  SingleOutput testCase(SingleInput readSingleInput);
+  protected abstract SingleOutput testCase(SingleInput readSingleInput);
 
-  String getFormattedResult(SingleOutput output);
+  protected abstract String getFormattedResult(SingleOutput output);
 
-  SingleInput getInputFromReader(BufferedReader br);
+  protected abstract SingleInput getInputFromReader(BufferedReader br) throws IOException;
 }
