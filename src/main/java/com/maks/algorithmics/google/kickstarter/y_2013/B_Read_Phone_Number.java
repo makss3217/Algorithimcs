@@ -1,6 +1,6 @@
 package com.maks.algorithmics.google.kickstarter.y_2013;
 
-import com.maks.algorithmics.Utils.Input;
+import com.maks.algorithmics.Utils.InputUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class B_Read_Phone_Number {
   private static final StringBuilder strBuilder = new StringBuilder();
 
   public static void run() throws IOException {
-    int t = Input.readIntFromLineOrNull(br);
+    int t = InputUtils.readIntFromLineOrNull(br);
     for (int i = 1; i <= t; i++) {
       strBuilder.append("Case #" + i + ": ");
       strBuilder.append(testCase());
@@ -53,7 +53,7 @@ public class B_Read_Phone_Number {
 
   private static String testCase() throws IOException {
     StringBuilder localBuilder = new StringBuilder();
-    List<String> input = Input.readListOfStringFromLineOrNull(br);
+    List<String> input = InputUtils.readListOfStringFromLineOrNull(br);
     List<Integer> phoneNumber = createNumberList(input.get(0));
     List<Integer> format = createFormat(input.get(1));
     int numberPointer = 0;

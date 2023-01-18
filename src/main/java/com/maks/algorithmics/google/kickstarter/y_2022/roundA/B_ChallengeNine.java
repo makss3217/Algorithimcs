@@ -1,13 +1,12 @@
-package com.maks.algorithmics.google.kickstarter.y_2013;
+package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
 import com.maks.algorithmics.Utils.InputUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
-public class C_Rational_Number_Tree {
+public class B_ChallengeNine {
 
   private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   private static final StringBuilder strBuilder = new StringBuilder();
@@ -23,27 +22,28 @@ public class C_Rational_Number_Tree {
   }
 
   private static String testCase() throws IOException {
-    List<Integer> input = InputUtils.readListOfIntegersFromLineOrNull(br);
-    int caseCode = input.get(0);
-    return caseCode == 1 ? getFraction(input.get(1)) : getFractionNumber(input.get(1), input.get(2));
-  }
-
-  private static String getFractionNumber(long p, long q) {
-    long started_p = 1;
-    long started_q = 1;
-    long number = 1;
-
-    while(started_p * q != started_q * p) {
-      if(started_p * q > started_q * p) {
-
+    String input = br.readLine();
+    int sum = 0;
+    int numberToAdd;
+    int placeToAdd = 0;
+    for (char c : input.toCharArray()) {
+      sum += (c - '0');
+    }
+    numberToAdd = sum % 9;
+    if(numberToAdd == 0) {
+      return input.charAt(0) + '0' + input.stripLeading();
+    } else {
+      for (char c : input.toCharArray()) {
+        if(numberToAdd < (c - '0')) {
+          return
+              input.substring(0, placeToAdd) +
+              numberToAdd +
+              input.substring(placeToAdd, input.length());
+        }
+        placeToAdd++;
       }
     }
-
-    return null;
-  }
-
-  private static String getFraction(Integer n) {
-    return null;
+    return input + numberToAdd;
   }
 
 }

@@ -1,14 +1,14 @@
-package com.maks.algorithmics.google.kickstarter.y_2013;
+package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
 import com.maks.algorithmics.Utils.InputUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
-public class C_Rational_Number_Tree {
+public class A_SpeedTyping {
 
+  private static final String IMPOSSIBLE = "IMPOSSIBLE";
   private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   private static final StringBuilder strBuilder = new StringBuilder();
 
@@ -23,27 +23,20 @@ public class C_Rational_Number_Tree {
   }
 
   private static String testCase() throws IOException {
-    List<Integer> input = InputUtils.readListOfIntegersFromLineOrNull(br);
-    int caseCode = input.get(0);
-    return caseCode == 1 ? getFraction(input.get(1)) : getFractionNumber(input.get(1), input.get(2));
-  }
-
-  private static String getFractionNumber(long p, long q) {
-    long started_p = 1;
-    long started_q = 1;
-    long number = 1;
-
-    while(started_p * q != started_q * p) {
-      if(started_p * q > started_q * p) {
-
+    String original = br.readLine();
+    String input = br.readLine();
+    int mistakesAvailable = input.length() - original.length();
+    int inputPointer = 0;
+    for(int i = 0; i < original.length(); i++) {
+      while (original.charAt(i) != input.charAt(inputPointer)) {
+        if (mistakesAvailable == 0)
+          return IMPOSSIBLE;
+        mistakesAvailable--;
+        inputPointer++;
       }
+      inputPointer++;
     }
-
-    return null;
-  }
-
-  private static String getFraction(Integer n) {
-    return null;
+    return String.valueOf(input.length() - original.length());
   }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
-import com.maks.algorithmics.Utils.Input;
+import com.maks.algorithmics.Utils.InputUtils;
 
 public class A_Sorting {
 
@@ -17,7 +17,7 @@ public class A_Sorting {
   private static final StringBuilder strBuilder = new StringBuilder();
 
   public static void run() throws IOException {
-    int t = Input.readIntFromLineOrNull(br);
+    int t = InputUtils.readIntFromLineOrNull(br);
     for(int i = 1; i <= t; i++) {
       strBuilder.append("Case #" + i + ": ");
       strBuilder.append(testCase());
@@ -32,8 +32,8 @@ public class A_Sorting {
     List<Integer> resultBooks = new ArrayList<>();
     List<Boolean> labels = new ArrayList<>();
     boolean isOdd;
-    int n = Input.readIntFromLineOrNull(br);
-    List<Integer> input = Input.readListOfIntegersFromLineOrNull(br);
+    int n = InputUtils.readIntFromLineOrNull(br);
+    List<Integer> input = InputUtils.readListOfIntegersFromLineOrNull(br);
 
     for (int book : input) {
       isOdd = ((book & 1) == 1);
