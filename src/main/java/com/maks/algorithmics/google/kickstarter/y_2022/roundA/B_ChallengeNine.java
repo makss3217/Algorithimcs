@@ -1,49 +1,54 @@
 package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
-import com.maks.algorithmics.Utils.InputUtils;
+import com.maks.algorithmics.google.kickstarter.GoogleKickstarterTask;
+import lombok.Value;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-public class B_ChallengeNine {
+public class B_ChallengeNine extends GoogleKickstarterTask<B_ChallengeNine.Input, B_ChallengeNine.Output> {
 
-  private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-  private static final StringBuilder strBuilder = new StringBuilder();
-
-  public static void run() throws IOException {
-    int t = InputUtils.readIntFromLineOrNull(br);
-    for (int i = 1; i <= t; i++) {
-      strBuilder.append("Case #" + i + ": ");
-      strBuilder.append(testCase());
-      strBuilder.append("\n");
-    }
-    System.out.println(strBuilder);
-  }
-
-  private static String testCase() throws IOException {
-    String input = br.readLine();
+  @Override
+  protected Output testCase(Input input) {
+    String numberAsStr = input.getNumber();
     int sum = 0;
     int numberToAdd;
     int placeToAdd = 0;
-    for (char c : input.toCharArray()) {
+    for (char c : numberAsStr.toCharArray()) {
       sum += (c - '0');
     }
     numberToAdd = sum % 9;
     if(numberToAdd == 0) {
-      return input.charAt(0) + '0' + input.stripLeading();
+      return new Output(numberAsStr.charAt(0) + '0' + numberAsStr.stripLeading());
     } else {
-      for (char c : input.toCharArray()) {
+      for (char c : numberAsStr.toCharArray()) {
         if(numberToAdd < (c - '0')) {
-          return
-              input.substring(0, placeToAdd) +
-              numberToAdd +
-              input.substring(placeToAdd, input.length());
+          return new Output(numberAsStr.substring(0, placeToAdd) + numberToAdd + numberAsStr.substring(placeToAdd));
         }
         placeToAdd++;
       }
     }
-    return input + numberToAdd;
+    return new Output(numberAsStr + numberToAdd);
+  }
+
+  @Override
+  protected String getFormattedResult(Output output) {
+    return String.valueOf(output.newNumber);
+  }
+
+  @Override
+  protected Input getInputFromReader(BufferedReader br) throws IOException {
+    return new Input(br.readLine());
+  }
+
+  @Value
+  static class Input {
+    String number;
+  }
+
+  @Value
+  static class Output {
+    String newNumber;
   }
 
 }

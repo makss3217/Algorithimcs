@@ -1,6 +1,5 @@
 package com.maks.algorithmics.google.kickstarter.y_2022.roundA;
 
-import com.maks.algorithmics.Utils.InputUtils;
 import com.maks.algorithmics.google.kickstarter.GoogleKickstarterTask;
 import lombok.Value;
 
@@ -8,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
 
-public class C_PalindromeFreeStrings extends GoogleKickstarterTask<C_PalindromeFreeStrings.Input, C_PalindromeFreeStrings.Output> {
+class C_PalindromeFreeStrings extends GoogleKickstarterTask<C_PalindromeFreeStrings.Input, C_PalindromeFreeStrings.Output> {
 
   private static final Set<String> PALINDROMS_5 = Set.of(
       "00000",

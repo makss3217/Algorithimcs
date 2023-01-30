@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @AllArgsConstructor
-public class D_InterestingIntegers extends GoogleKickstarterTask<D_InterestingIntegers.Input, D_InterestingIntegers.Output> {
+class D_InterestingIntegers extends GoogleKickstarterTask<D_InterestingIntegers.Input, D_InterestingIntegers.Output> {
 
   static final HashMap<InterestingIntegersKey, Long> interestingNumbersMap = new HashMap<>();
 
